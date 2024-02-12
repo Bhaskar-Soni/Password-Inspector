@@ -74,4 +74,4 @@ Time to Crack: 2 years, 4 months, 15 days
 ## Contributing 💡
 
 You can propose a feature request opening an issue or a pull request.
-Bhaskar Soni (GitHub: @bhaskar-soni)
+Bhaskar Soni (GitHub: <a href="https://github.com/bhaskar-soni">@bhaskar-soni</a>)
