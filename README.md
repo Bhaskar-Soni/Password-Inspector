@@ -41,6 +41,10 @@ Welcome to the Password Inspector!, a tool that helps you evaluate the strength 
  ```bash
 python3 -m pip install -r requirements.txt
 ```
+or
+ ```bash
+python3 -m pip install --upgrade requests
+```
 **Run Password Strength Checker:**
 ```bash
 python3 password-inspector.py
