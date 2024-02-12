@@ -39,7 +39,7 @@ Welcome to the Password Inspector!, a tool that helps you evaluate the strength 
 
 **Install Dependencies:**
  ```bash
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 **Run Password Strength Checker:**
 ```bash
