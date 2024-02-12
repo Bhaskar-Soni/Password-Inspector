@@ -1,7 +1,7 @@
 import string
 import hashlib
 import requests
-from colorama import Fore, Style
+from colorama import Fore, Style, Back
 
 BANNER = f"""{Style.BRIGHT}
 
