@@ -1,6 +1,6 @@
 <div align="center">
   <a href="#">
-    <img src="./password-inspector-logo.png" alt="logo" height="135px">
+    <img src="https://imgur.com/a/rupcZVJ" alt="logo" height="135px">
   </a>
   <p align="center">
     <a
