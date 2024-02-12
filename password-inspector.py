@@ -3,6 +3,26 @@ import hashlib
 import requests
 from colorama import Fore, Style
 
+ascii_art = r"""
+$$$$$$$\                                                                       $$\       $$$$$$\                                                     $$\                         
+$$  __$$\                                                                      $$ |      \_$$  _|                                                    $$ |                        
+$$ |  $$ |$$$$$$\   $$$$$$$\  $$$$$$$\ $$\  $$\  $$\  $$$$$$\   $$$$$$\   $$$$$$$ |        $$ |  $$$$$$$\   $$$$$$$\  $$$$$$\   $$$$$$\   $$$$$$$\ $$$$$$\    $$$$$$\   $$$$$$\  
+$$$$$$$  |\____$$\ $$  _____|$$  _____|$$ | $$ | $$ |$$  __$$\ $$  __$$\ $$  __$$ |        $$ |  $$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|\_$$  _|  $$  __$$\ $$  __$$\ 
+$$  ____/ $$$$$$$ |\$$$$$$\  \$$$$$$\  $$ | $$ | $$ |$$ /  $$ |$$ |  \__|$$ /  $$ |        $$ |  $$ |  $$ |\$$$$$$\  $$ /  $$ |$$$$$$$$ |$$ /        $$ |    $$ /  $$ |$$ |  \__|
+$$ |     $$  __$$ | \____$$\  \____$$\ $$ | $$ | $$ |$$ |  $$ |$$ |      $$ |  $$ |        $$ |  $$ |  $$ | \____$$\ $$ |  $$ |$$   ____|$$ |        $$ |$$\ $$ |  $$ |$$ |      
+$$ |     \$$$$$$$ |$$$$$$$  |$$$$$$$  |\$$$$$\$$$$  |\$$$$$$  |$$ |      \$$$$$$$ |      $$$$$$\ $$ |  $$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ \$$$$$$$\   \$$$$  |\$$$$$$  |$$ |      
+\__|      \_______|\_______/ \_______/  \_____\____/  \______/ \__|       \_______|      \______|\__|  \__|\_______/ $$  ____/  \_______| \_______|   \____/  \______/ \__|      
+                                                                                                                     $$ |                                                        
+                                                                                                                     $$ |                                                        
+                                                                                                                     \__|                                                        
+"""
+
+# Print the ASCII art
+print(ascii_art)
+print("Welcome to the Password Inspector!")
+print("This tool helps you evaluate the strength of your passwords and ensure they meet security standards.\n")
+
+
 def password_strength(password):
     # Check length
     length_score = min(len(password) // 8, 3)
@@ -119,47 +139,50 @@ def check_password_breaches(password):
     return 0, None
 
 def check_password_strength_terminal():
-    user_password = input("Enter Password: ")
-    print(" ")
+    try:
+        user_password = input("Enter Password: ")
+        print(" ")
 
-    # Check if the password has been previously leaked
-    count, suffix = check_password_breaches(user_password)
-    if count > 0:
-        print(f"{Fore.RED}Warning: This password has been previously leaked {count} times in breaches.{Style.RESET_ALL}")
-        print("Choose a different password.\n")
-        #return  # Exit the function if the password is breached
-    else:
-        print("This password has not been previously leaked.\n")
-
-    # Check password length
-    password_length = len(user_password)
-
-    # Check and display password strength
-    strength = password_strength(user_password)
-    checkmarks = character_checkmarks(user_password)
-    time_to_crack = calculate_time_to_crack(user_password)
-
-    # Additional feature: Password audit check
-    if password_length > 12 and any(char.isupper() for char in user_password) and any(char.islower() for char in user_password) and any(char.isdigit() for char in user_password) and any(char in string.punctuation for char in user_password):
-        print(f"Audit: {Fore.GREEN}Pass{Style.RESET_ALL}")
-    else:
-        audit_fail_reason = f"Audit: {Fore.RED}Fail{Style.RESET_ALL}\nReason: "
-        if password_length <= 12:
-            audit_fail_reason += "Password length should be more than 12 characters."
+        # Check if the password has been previously leaked
+        count, suffix = check_password_breaches(user_password)
+        if count > 0:
+            print(f"{Fore.RED}Warning: This password has been previously leaked {count} times in breaches.{Style.RESET_ALL}")
+            print("Choose a different password.\n")
         else:
-            missing_char_types = [char_type for char_type, check in zip(['Uppercase', 'Lowercase', 'Numbers', 'Symbols'], [any(char.isupper() for char in user_password), any(char.islower() for char in user_password), any(char.isdigit() for char in user_password), any(char in string.punctuation for char in user_password)]) if not check]
-            audit_fail_reason += f"Password should include {', '.join(missing_char_types)}."
-        
-        print(f"{Fore.RED}{audit_fail_reason}{Style.RESET_ALL}\n")
+            print("This password has not been previously leaked.\n")
 
-    print(f"\nPassword Strength: {Fore.GREEN}{strength}{Style.RESET_ALL}\n"
-          f"Password Length: {password_length} characters\n\n"
-          f"Character Checkmarks:\n"
-          f"Uppercase: {checkmarks[0]}\n"
-          f"Lowercase: {checkmarks[1]}\n"
-          f"Numbers: {checkmarks[2]}\n"
-          f"Symbols: {checkmarks[3]}\n\n"
-          f"Time to Crack: {time_to_crack}")
+        # Check password length
+        password_length = len(user_password)
+
+        # Check and display password strength
+        strength = password_strength(user_password)
+        checkmarks = character_checkmarks(user_password)
+        time_to_crack = calculate_time_to_crack(user_password)
+
+        # Additional feature: Password audit check
+        if password_length > 12 and any(char.isupper() for char in user_password) and any(char.islower() for char in user_password) and any(char.isdigit() for char in user_password) and any(char in string.punctuation for char in user_password):
+            print(f"Audit: {Fore.GREEN}Pass{Style.RESET_ALL}")
+        else:
+            audit_fail_reason = f"Audit: {Fore.RED}Fail{Style.RESET_ALL}\nReason: "
+            if password_length <= 12:
+                audit_fail_reason += "Password length should be more than 12 characters."
+            else:
+                missing_char_types = [char_type for char_type, check in zip(['Uppercase', 'Lowercase', 'Numbers', 'Symbols'], [any(char.isupper() for char in user_password), any(char.islower() for char in user_password), any(char.isdigit() for char in user_password), any(char in string.punctuation for char in user_password)]) if not check]
+                audit_fail_reason += f"Password should include {', '.join(missing_char_types)}."
+
+            print(f"{Fore.RED}{audit_fail_reason}{Style.RESET_ALL}\n")
+
+        print(f"\nPassword Strength: {Fore.GREEN}{strength}{Style.RESET_ALL}\n"
+              f"Password Length: {password_length} characters\n\n"
+              f"Character Checkmarks:\n"
+              f"Uppercase: {checkmarks[0]}\n"
+              f"Lowercase: {checkmarks[1]}\n"
+              f"Numbers: {checkmarks[2]}\n"
+              f"Symbols: {checkmarks[3]}\n\n"
+              f"Time to Crack: {time_to_crack}")
+
+    except KeyboardInterrupt:
+        print("\nExiting Password Strength Checker. Goodbye!")
 
 # Run the modified password strength checker in the terminal
 check_password_strength_terminal()
